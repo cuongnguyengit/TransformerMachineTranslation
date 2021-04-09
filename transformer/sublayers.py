@@ -16,9 +16,9 @@ class _MultiHeadAttention(nn.Module):
         self.d_model = d_model
         self.n_heads = n_heads
 
-        self.w_q = Linear([d_model, d_k * n_heads])
-        self.w_k = Linear([d_model, d_k * n_heads])
-        self.w_v = Linear([d_model, d_v * n_heads])
+        self.w_q = Linear(d_model, d_k * n_heads)
+        self.w_k = Linear(d_model, d_k * n_heads)
+        self.w_v = Linear(d_model, d_v * n_heads)
 
         self.attention = ScaledDotProductAttention(d_k, dropout)
 
