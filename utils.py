@@ -13,6 +13,7 @@ import time
 
 
 def get_gpu_memory_map():
+  if torch.cuda.is_available():
     result = subprocess.check_output(
         [
             'nvidia-smi', '--query-gpu=memory.used',
@@ -20,6 +21,7 @@ def get_gpu_memory_map():
         ])
 
     return float(result)
+  return 0.0
 
 
 def save_model(model, optimizer, epoch, save_path="checkpoint"):
@@ -116,13 +118,13 @@ def train(model: nn.Module,
 
         gc.collect()
         torch.cuda.empty_cache()
-        time.sleep(100)
+        time.sleep(50)
 
         # print("LOOP: (%s) | OUT  STATE" % _, get_gpu_memory_map())
         str_output += f"LOOP: ({_}) | OUT STATE {get_gpu_memory_map()}\n"
 
         if _ % 10 == 0:
-            print(str_output)
+            # print(str_output)
             print(f'\tIter: {_ + 1:02} | loss={epoch_loss / (_ + 1)}')
             print('-' * 29)
 
