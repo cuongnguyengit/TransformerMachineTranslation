@@ -6,6 +6,26 @@ from collections import Counter
 from torchtext.vocab import Vocab
 import io
 import torch.nn as nn
+import os
+
+
+def save_model(model, optimizer, epoch, save_path="checkpoint"):
+  os.makedirs(save_path, exist_ok=True)
+  torch.save({
+    "epoch": epoch,
+    "model_state_dict": model.state_dict(),
+    "optimizer_state_dict": optimizer.state_dict(),
+    # "scheduler_state_dict": scheduler.state_dict(),
+  }, os.path.join(save_path, "seq2seq.model.ep{}".format(epoch)))
+
+
+def load_model(model, optimizer, save_path, device):
+  checkpoint = torch.load(save_path)
+  model.load_state_dict(checkpoint["model_state_dict"])
+  model.to(device)
+  optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+  # scheduler.load_state_dict(checkpoint["scheduler_state_dict"])
+  return checkpoint["epoch"] + 1
 
 
 def build_vocab(filepath):

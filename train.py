@@ -79,6 +79,8 @@ for epoch in range(N_EPOCHS):
     print(f'Epoch: {epoch+1:02} | Time: {epoch_mins}m {epoch_secs}s')
     print(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {math.exp(train_loss):7.3f}')
     # print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {math.exp(valid_loss):7.3f}')
+    if (epoch + 1) % checkpoint_per_epoch == 0:
+        save_model(model, optimizer, epoch, './checkpoint')
 
 # test_loss = evaluate(model, test_iter, criterion)
 # print(f'| Test Loss: {test_loss:.3f} | Test PPL: {math.exp(test_loss):7.3f} |')

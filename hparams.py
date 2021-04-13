@@ -13,3 +13,5 @@ DEC_HID_DIM = 64
 ATTN_DIM = 8
 ENC_DROPOUT = 0.5
 DEC_DROPOUT = 0.5
+
+checkpoint_per_epoch = 5
