@@ -33,7 +33,7 @@ def build_vocab(filepath):
   for path in filepath:
     with io.open(path, encoding="utf8") as f:
       for string_ in f:
-        counter.update(string_)
+        counter.update(string_.split())
   return Vocab(counter, specials=['<unk>', '<pad>', '<bos>', '<eos>'])
 
 
@@ -90,6 +90,10 @@ def train(model: nn.Module,
     optimizer.step()
 
     epoch_loss += loss.item()
+
+    del src
+    del trg
+    del output
 
     if _ % 10 == 0:
       print(f'\tIter: {_+1:02} | loss={epoch_loss / (_ + 1)}')

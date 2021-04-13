@@ -7,7 +7,7 @@ import time
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-BATCH_SIZE = 128
+BATCH_SIZE = 16
 
 train_filepaths1 = ['./data/train_src1.txt', './data/train_tgt1.txt']
 train_filepaths2 = ['./data/train_src2.txt', './data/train_tgt2.txt']
