@@ -30,8 +30,8 @@ def generate_batch(data_batch):
   en_batch = pad_sequence(en_batch, padding_value=PAD_IDX)
   return de_batch, en_batch
 
-train_data1 = data_process(train_filepaths1)
-train_data2 = data_process(train_filepaths2)
+train_data1 = data_process(train_filepaths1, vocab)
+train_data2 = data_process(train_filepaths2, vocab)
 train_data = []
 train_data.extend(train_data1)
 train_data.extend(train_data2)
