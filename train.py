@@ -42,7 +42,6 @@ train_iter = DataLoader(train_data, batch_size=BATCH_SIZE,
                         shuffle=True, collate_fn=generate_batch)
 
 
-
 INPUT_DIM = OUTPUT_DIM = len(vocab)
 
 enc = Encoder(INPUT_DIM, ENC_EMB_DIM, ENC_HID_DIM, DEC_HID_DIM, ENC_DROPOUT)
