@@ -91,6 +91,9 @@ def train(model: nn.Module,
 
     epoch_loss += loss.item()
 
+    if _ % 10 == 0:
+      print(f'\tIter: {_+1:02} | loss={epoch_loss / (_ + 1)}')
+
   return epoch_loss / len(iterator)
 
 
