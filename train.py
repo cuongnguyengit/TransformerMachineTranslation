@@ -66,7 +66,7 @@ CLIP = 1
 best_valid_loss = float('inf')
 
 for epoch in range(N_EPOCHS):
-
+    print(f'Epoch: {epoch + 1:02}')
     start_time = time.time()
 
     train_loss = train(model, train_iter, optimizer, criterion, CLIP, device)
