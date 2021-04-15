@@ -57,6 +57,8 @@ def data_process(filepaths, vocab):
     raw_en_iter = iter(io.open(filepaths[1], encoding="utf8"))
     data = []
     for (raw_de, raw_en) in zip(raw_de_iter, raw_en_iter):
+        if len(raw_de) > 64 or len(raw_en) > 64:
+            continue
         de_tensor_ = torch.tensor([vocab[token] for token in raw_de],
                                   dtype=torch.long)
         en_tensor_ = torch.tensor([vocab[token] for token in raw_en],
@@ -118,12 +120,12 @@ def train(model: nn.Module,
 
         gc.collect()
         torch.cuda.empty_cache()
-        time.sleep(50)
+        time.sleep(0.5)
 
         # print("LOOP: (%s) | OUT  STATE" % _, get_gpu_memory_map())
         str_output += f"LOOP: ({_}) | OUT STATE {get_gpu_memory_map()}\n"
 
-        if _ % 10 == 0:
+        if _ % 1000 == 0:
             # print(str_output)
             print(f'\tIter: {_ + 1:02} | loss={epoch_loss / (_ + 1)}')
             print('-' * 29)

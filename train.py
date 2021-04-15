@@ -7,7 +7,7 @@ import time
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-BATCH_SIZE = 64
+BATCH_SIZE = 256
 
 train_filepaths1 = ['./data/train_src1.txt', './data/train_tgt1.txt']
 train_filepaths2 = ['./data/train_src2.txt', './data/train_tgt2.txt']
@@ -60,7 +60,7 @@ print(f'The model has {count_parameters(model):,} trainable parameters')
 
 criterion = nn.CrossEntropyLoss(ignore_index=PAD_IDX)
 
-N_EPOCHS = 5
+N_EPOCHS = 300
 CLIP = 1
 
 best_valid_loss = float('inf')
@@ -76,10 +76,12 @@ for epoch in range(N_EPOCHS):
 
     epoch_mins, epoch_secs = epoch_time(start_time, end_time)
 
-    print(f'Epoch: {epoch+1:02} | Time: {epoch_mins}m {epoch_secs}s')
+    print(f'\tEpoch: {epoch+1:02} | Time: {epoch_mins}m {epoch_secs}s')
     print(f'\tTrain Loss: {train_loss:.3f} | Train PPL: {math.exp(train_loss):7.3f}')
+    print("*" * 30)
     # print(f'\t Val. Loss: {valid_loss:.3f} |  Val. PPL: {math.exp(valid_loss):7.3f}')
     if (epoch + 1) % checkpoint_per_epoch == 0:
+        print(f'Save model at {epoch}')
         save_model(model, optimizer, epoch, '/content/drive/MyDrive/checkpoint')
 
 # test_loss = evaluate(model, test_iter, criterion)
