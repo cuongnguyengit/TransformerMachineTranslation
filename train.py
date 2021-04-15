@@ -41,6 +41,8 @@ print(f"Training Data: {len(train_data1)} + {len(train_data2)} = {len(train_data
 train_iter = DataLoader(train_data, batch_size=BATCH_SIZE,
                         shuffle=True, collate_fn=generate_batch)
 
+train_core_iter = DataLoader(train_data1, batch_size=BATCH_SIZE,
+                        shuffle=True, collate_fn=generate_batch)
 
 INPUT_DIM = OUTPUT_DIM = len(vocab)
 
@@ -64,12 +66,21 @@ N_EPOCHS = 300
 CLIP = 1
 
 best_valid_loss = float('inf')
+try:
+    start_epoch = load_model(model, optimizer, '/content/drive/MyDrive/checkpoint/seq2seq.model.ep4', device)
+    print(f'Resume Training with {start_epoch}')
+except:
+    print('Start new Training')
+    start_epoch = 0
 
-for epoch in range(N_EPOCHS):
+for epoch in range(start_epoch, N_EPOCHS):
     print(f'Epoch: {epoch + 1:02}')
     start_time = time.time()
 
-    train_loss = train(model, train_iter, optimizer, criterion, CLIP, device)
+    if epoch >= 50:
+        train_loss = train(model, train_core_iter, optimizer, criterion, CLIP, device)
+    else:
+        train_loss = train(model, train_iter, optimizer, criterion, CLIP, device)
     # valid_loss = evaluate(model, valid_iter, criterion)
 
     end_time = time.time()
